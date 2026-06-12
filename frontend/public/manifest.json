@@ -1,0 +1,9 @@
+{
+  "name": "LegalX AI Knowledge Centre",
+  "short_name": "LegalX",
+  "description": "AI-powered legal knowledge platform for Indian law",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#818cf8"
+}

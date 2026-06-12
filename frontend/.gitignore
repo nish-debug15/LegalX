@@ -1,0 +1,6 @@
+# LegalX Frontend
+
+node_modules/
+.next/
+out/
+.env*.local
