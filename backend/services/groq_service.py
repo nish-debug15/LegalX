@@ -5,7 +5,7 @@ Groq LLM service — handles all AI generation:
 3. RAG Q&A (context-grounded answers)
 4. Card description (one-liner for homepage)
 
-Model: llama3-70b-8192 (Groq free tier)
+Model: llama-3.3-70b-versatile 
 """
 
 import os
@@ -16,7 +16,7 @@ from groq import AsyncGroq
 logger = logging.getLogger(__name__)
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-MODEL = "llama3-70b-8192"
+MODEL = "llama-3.3-70b-versatile"
 MAX_TOKENS = 1024
 TEMPERATURE = 0.3
 
