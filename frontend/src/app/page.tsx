@@ -3,7 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchTopics, TopicListItem } from "@/lib/api";
-import { getTopicMeta } from "@/lib/topics";
+import { getTopicMeta, TopicMeta } from "@/lib/topics";
+import { Shield, Scale, ShieldAlert, FileText, Receipt } from "lucide-react";
+
+const ICON_MAP: Record<TopicMeta["iconName"], React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>> = {
+  shield: Shield,
+  scale: Scale,
+  "shield-alert": ShieldAlert,
+  "file-text": FileText,
+  receipt: Receipt,
+};
 
 export default function HomePage() {
   const [topics, setTopics] = useState<TopicListItem[]>([]);
@@ -41,7 +50,7 @@ export default function HomePage() {
         </div>
       ) : error ? (
         <div className="empty-state">
-          <div className="empty-state-icon">⚠️</div>
+          <div className="empty-state-icon">—</div>
           <h2>Could not load topics</h2>
           <p>
             Make sure the backend is running and ingestion has been completed.
@@ -51,7 +60,7 @@ export default function HomePage() {
         </div>
       ) : topics.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-state-icon">📭</div>
+          <div className="empty-state-icon">—</div>
           <h2>No topics yet</h2>
           <p>
             Run the ingestion pipeline first:
@@ -65,6 +74,7 @@ export default function HomePage() {
         <div className="topics-grid">
           {topics.map((topic) => {
             const meta = getTopicMeta(topic.id);
+            const IconComponent = ICON_MAP[meta.iconName];
             return (
               <Link
                 key={topic.id}
@@ -72,15 +82,9 @@ export default function HomePage() {
                 className="topic-card"
                 id={`topic-card-${topic.id}`}
               >
-                <div
-                  className="topic-card-content"
-                  style={{ ["--card-gradient" as string]: meta.gradient }}
-                >
-                  <div
-                    className="topic-card-icon"
-                    style={{ background: meta.gradient }}
-                  >
-                    {meta.icon}
+                <div className="topic-card-content">
+                  <div className="topic-card-icon-wrap">
+                    <IconComponent size={28} color={meta.accentColor} strokeWidth={1.75} />
                   </div>
                   <h3>{topic.name}</h3>
                   <p>{topic.description || "Explore this topic →"}</p>

@@ -8,6 +8,7 @@ Vector service — ChromaDB storage and retrieval using local embeddings.
 
 import os
 import logging
+from typing import Any
 import chromadb
 from sentence_transformers import SentenceTransformer
 
@@ -16,11 +17,11 @@ logger = logging.getLogger(__name__)
 CHROMA_DB_PATH = os.getenv("CHROMA_DB_PATH", "./chroma_db")
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
-_chroma_client: chromadb.PersistentClient | None = None
+_chroma_client: Any | None = None
 _embedding_model: SentenceTransformer | None = None
 
 
-def get_chroma_client() -> chromadb.PersistentClient:
+def get_chroma_client() -> Any:
     """Get or create the ChromaDB PersistentClient singleton."""
     global _chroma_client
     if _chroma_client is None:

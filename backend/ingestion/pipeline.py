@@ -63,6 +63,19 @@ async def ingest_topic(topic_id: str, db: AsyncSession) -> str:
         await db.delete(old_chunk)
     await db.flush()
 
+    # Ensure topic exists in DB before adding chunks to satisfy foreign key
+    existing_topic = await db.get(Topic, topic_id)
+    if not existing_topic:
+        new_topic = Topic(
+            id=topic_id,
+            name=topic_name,
+            description="",
+            summary="",
+            key_info={},
+        )
+        db.add(new_topic)
+        await db.flush()
+
     # Store in ChromaDB
     logger.info(f"[{topic_id}] Step 4/7: Storing in ChromaDB...")
     num_stored = store_chunks(topic_id, chunks)
@@ -92,22 +105,12 @@ async def ingest_topic(topic_id: str, db: AsyncSession) -> str:
 
     # Upsert topic in PostgreSQL
     logger.info(f"[{topic_id}] Step 7/7: Saving topic to PostgreSQL...")
-    existing_topic = await db.get(Topic, topic_id)
-
-    if existing_topic:
-        existing_topic.name = topic_name
-        existing_topic.description = description
-        existing_topic.summary = summary
-        existing_topic.key_info = key_info
-    else:
-        new_topic = Topic(
-            id=topic_id,
-            name=topic_name,
-            description=description,
-            summary=summary,
-            key_info=key_info,
-        )
-        db.add(new_topic)
+    topic = await db.get(Topic, topic_id)
+    
+    topic.name = topic_name
+    topic.description = description
+    topic.summary = summary
+    topic.key_info = key_info
 
     await db.flush()
     logger.info(f"═══ Completed ingestion for: {topic_name} ({topic_id}) ═══")

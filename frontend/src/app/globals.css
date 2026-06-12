@@ -144,35 +144,59 @@ a:hover {
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-weight: 800;
-  font-size: 1.25rem;
-  color: var(--text-primary);
+  gap: 10px;
   text-decoration: none;
-  letter-spacing: -0.02em;
+  transition: opacity var(--transition-fast);
 }
 
-.navbar-brand-icon {
+.navbar-brand:hover {
+  opacity: 0.9;
+}
+
+.navbar-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, #818cf8, #6366f1);
-  font-size: 1.1rem;
-  box-shadow: 0 0 20px rgba(129, 140, 248, 0.3);
+  background: rgba(129, 140, 248, 0.08);
+  border: 1px solid rgba(129, 140, 248, 0.15);
+  filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.25));
+  transition: all var(--transition-base);
+}
+
+.navbar-brand:hover .navbar-logo {
+  filter: drop-shadow(0 0 18px rgba(129, 140, 248, 0.4));
+  border-color: rgba(129, 140, 248, 0.3);
+}
+
+.navbar-brand-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.brand-legal {
+  color: #f0f0f5;
+}
+
+.brand-x {
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .navbar-badge {
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 2px 8px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 10px;
   border-radius: 999px;
-  background: rgba(129, 140, 248, 0.15);
-  color: var(--accent-primary);
+  background: linear-gradient(135deg, rgba(129, 140, 248, 0.12), rgba(192, 132, 252, 0.12));
+  color: #a5b4fc;
   border: 1px solid rgba(129, 140, 248, 0.2);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -249,16 +273,9 @@ a:hover {
   z-index: 1;
 }
 
-.topic-card-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.75rem;
+.topic-card-icon-wrap {
   margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
+  line-height: 0;
 }
 
 .topic-card h3 {
@@ -302,7 +319,10 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: white;
   flex-shrink: 0;
 }
 

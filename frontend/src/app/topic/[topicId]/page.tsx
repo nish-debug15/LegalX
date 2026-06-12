@@ -128,7 +128,7 @@ export default function TopicPage() {
           ← Back to topics
         </Link>
         <div className="empty-state">
-          <div className="empty-state-icon">😵</div>
+          <div className="empty-state-icon">—</div>
           <h2>Topic not found</h2>
           <p>{error || "This topic does not exist or hasn't been ingested yet."}</p>
         </div>
@@ -141,25 +141,25 @@ export default function TopicPage() {
     {
       key: "key_rights",
       label: "Key Rights",
-      icon: "🏛️",
+      icon: "§",
       items: topic.key_info?.key_rights || [],
     },
     {
       key: "important_provisions",
       label: "Important Provisions",
-      icon: "📜",
+      icon: "¶",
       items: topic.key_info?.important_provisions || [],
     },
     {
       key: "penalties",
       label: "Penalties",
-      icon: "⚠️",
+      icon: "!",
       items: topic.key_info?.penalties || [],
     },
     {
       key: "who_can_benefit",
       label: "Who Can Benefit",
-      icon: "👥",
+      icon: "∷",
       items: topic.key_info?.who_can_benefit || [],
     },
   ];
@@ -174,7 +174,7 @@ export default function TopicPage() {
       {/* Header */}
       <div className="topic-header">
         <div className="topic-header-icon" style={{ background: meta.gradient }}>
-          {meta.icon}
+          {meta.monogram}
         </div>
         <div>
           <h1>{topic.name}</h1>
@@ -188,10 +188,10 @@ export default function TopicPage() {
       <div className="tabs" role="tablist">
         {(
           [
-            { id: "summary", label: "📄 Summary" },
-            { id: "keyinfo", label: "🔑 Key Info" },
-            { id: "ask", label: "💬 Ask AI" },
-            { id: "audio", label: "🎧 Audio" },
+            { id: "summary", label: "Summary" },
+            { id: "keyinfo", label: "Key Info" },
+            { id: "ask", label: "Ask AI" },
+            { id: "audio", label: "Audio" },
           ] as { id: Tab; label: string }[]
         ).map((tab) => (
           <button
@@ -222,7 +222,7 @@ export default function TopicPage() {
               </div>
             ) : (
               <div className="empty-state">
-                <div className="empty-state-icon">📝</div>
+                <div className="empty-state-icon">—</div>
                 <h2>No summary available</h2>
                 <p>Run the ingestion pipeline to generate an AI summary.</p>
               </div>
@@ -257,7 +257,7 @@ export default function TopicPage() {
               </div>
             ) : (
               <div className="empty-state">
-                <div className="empty-state-icon">🔍</div>
+                <div className="empty-state-icon">—</div>
                 <h2>No key information available</h2>
                 <p>Run the ingestion pipeline to extract key information.</p>
               </div>
@@ -271,7 +271,7 @@ export default function TopicPage() {
             <div className="chat-messages">
               {messages.length === 0 && !chatLoading && (
                 <div className="chat-empty">
-                  <div className="chat-empty-icon">💬</div>
+                  <div className="chat-empty-icon">?</div>
                   <p>Ask any question about {topic.name}</p>
                   <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
                     Powered by RAG — answers come from the actual legal text
@@ -284,7 +284,7 @@ export default function TopicPage() {
                   {msg.content}
                   {msg.sources && msg.sources.length > 0 && (
                     <div className="sources">
-                      📎 Sources: {msg.sources.join(", ")}
+                      Sources: {msg.sources.join(", ")}
                     </div>
                   )}
                 </div>
@@ -332,7 +332,7 @@ export default function TopicPage() {
         {/* ── Audio Tab ── */}
         {activeTab === "audio" && (
           <div className="audio-container">
-            <div className="audio-icon">🎧</div>
+            <div className="audio-icon">♫</div>
             <h2 className="audio-title">Listen to the Summary</h2>
             <p className="audio-desc">
               AI-generated audio narration of the {topic.name} summary
@@ -362,7 +362,7 @@ export default function TopicPage() {
                     Generating...
                   </>
                 ) : (
-                  "🔊 Generate Audio"
+                  "Generate Audio"
                 )}
               </button>
             )}
