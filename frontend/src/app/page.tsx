@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchTopics, TopicListItem } from "@/lib/api";
 import { getTopicMeta, TopicMeta } from "@/lib/topics";
-import { Shield, Scale, ShieldAlert, FileText, Receipt } from "lucide-react";
+import { Shield, Scale, Lock, FileText, Receipt } from "lucide-react";
 
 const ICON_MAP: Record<TopicMeta["iconName"], React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>> = {
   shield: Shield,
   scale: Scale,
-  "shield-alert": ShieldAlert,
+  "lock": Lock,
   "file-text": FileText,
   receipt: Receipt,
 };

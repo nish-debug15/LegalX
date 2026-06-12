@@ -3,7 +3,7 @@
  */
 
 export interface TopicMeta {
-  iconName: "shield" | "scale" | "shield-alert" | "file-text" | "receipt";
+  iconName: "shield" | "scale" | "lock" | "file-text" | "receipt";
   monogram: string;
   gradient: string;
   accentColor: string;
@@ -23,10 +23,10 @@ export const TOPIC_META: Record<string, TopicMeta> = {
     accentColor: "#f093fb",
   },
   cyber: {
-    iconName: "shield-alert",
+    iconName: "lock",
     monogram: "CL",
     gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-    accentColor: "#4facfe",
+    accentColor: "#00d4ff",
   },
   rti: {
     iconName: "file-text",
