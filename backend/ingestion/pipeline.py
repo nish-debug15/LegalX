@@ -132,6 +132,7 @@ async def ingest_all_topics(db: AsyncSession) -> list[str]:
 
     logger.info(f"Starting full ingestion for {len(topic_ids)} topics...")
 
+    import gc
     for topic_id in topic_ids:
         try:
             status = await ingest_topic(topic_id, db)
@@ -140,6 +141,9 @@ async def ingest_all_topics(db: AsyncSession) -> list[str]:
             error_msg = f"{topic_id}: FAILED — {str(e)}"
             logger.error(error_msg, exc_info=True)
             results.append(error_msg)
+            
+        # Free memory aggressively after each topic
+        gc.collect()
 
     logger.info(f"Ingestion complete. Results: {results}")
     return results

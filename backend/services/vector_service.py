@@ -10,7 +10,11 @@ import os
 import logging
 from typing import Any
 import chromadb
+import torch
 from sentence_transformers import SentenceTransformer
+
+# Optimize PyTorch memory for 512MB RAM constraints (Render Free Tier)
+torch.set_num_threads(1)
 
 logger = logging.getLogger(__name__)
 
