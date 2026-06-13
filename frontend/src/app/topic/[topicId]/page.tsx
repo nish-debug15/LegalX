@@ -84,10 +84,21 @@ export default function TopicPage() {
         },
       ]);
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      let errorMessage = "Something went wrong. Please try again.";
+      if (err instanceof Error) {
+        if (err.message.includes("429")) {
+          errorMessage = "AI rate limit reached. Please wait a minute and try again.";
+        } else if (err.message.includes("503")) {
+          errorMessage = "AI service is temporarily unavailable. Please try again shortly.";
+        } else if (err.message.includes("Failed to fetch")) {
+          errorMessage = "Cannot reach the server. Make sure the backend is running.";
+        } else {
+          errorMessage = err.message;
+        }
+      }
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: `Error: ${errorMessage}` },
+        { role: "assistant", content: errorMessage },
       ]);
     } finally {
       setChatLoading(false);

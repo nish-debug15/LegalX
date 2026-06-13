@@ -1,10 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from groq import RateLimitError
 from database import get_db
 from services.db_service import save_chat_message, get_chat_history, topic_exists
 from services.vector_service import retrieve_chunks
 from services.groq_service import ask_question
 from schemas import ChatRequest, ChatResponse, ChatMessageResponse
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 
@@ -30,7 +34,20 @@ async def chat(request: ChatRequest, db: AsyncSession = Depends(get_db)):
     context = "\n\n".join([chunk["content"] for chunk in retrieved])
     source_ids = [chunk["id"] for chunk in retrieved]
 
-    answer = await ask_question(context, request.question)
+    try:
+        answer = await ask_question(context, request.question)
+    except RateLimitError as e:
+        logger.warning(f"Groq rate limit hit: {e}")
+        raise HTTPException(
+            status_code=429,
+            detail="AI service rate limit reached. Please wait a minute and try again.",
+        )
+    except Exception as e:
+        logger.error(f"Groq API error: {e}")
+        raise HTTPException(
+            status_code=503,
+            detail="AI service temporarily unavailable. Please try again shortly.",
+        )
 
     await save_chat_message(
         db,
@@ -52,3 +69,4 @@ async def get_history(
 ):
     messages = await get_chat_history(db, session_id, topic_id)
     return messages
+
