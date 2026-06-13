@@ -77,7 +77,10 @@ def store_chunks(topic_id: str, chunks: list[dict]) -> int:
         for chunk in chunks
     ]
 
-    embeddings = model.encode(documents, show_progress_bar=False).tolist()
+    # Disable ChromaDB telemetry to clean up logs
+    os.environ["ANONYMIZED_TELEMETRY"] = "False"
+
+    embeddings = model.encode(documents, batch_size=4, show_progress_bar=False).tolist()
 
     collection.upsert(
         ids=ids,
