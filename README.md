@@ -6,26 +6,6 @@ LegalX is a full-stack AI application that scrapes authoritative legal sources, 
 
 ---
 
-## Table of Contents
-
-- [Architecture](#-architecture)
-- [Automation Pipeline](#-automation-pipeline)
-- [Tech Stack](#-tech-stack)
-- [Features](#-features)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-  - [Docker (Recommended)](#docker-recommended)
-  - [Manual Setup](#manual-setup)
-- [API Reference](#-api-reference)
-- [RAG Implementation](#-rag-implementation)
-- [Deployment](#-deployment)
-- [Challenges & Solutions](#-challenges--solutions)
-- [Assessment Criteria Coverage](#-assessment-criteria-coverage)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
-
----
-
 ## Architecture
 
 ```
@@ -347,7 +327,7 @@ LegalX uses **Retrieval-Augmented Generation** to answer user questions with gro
    - `GROQ_API_KEY` — your Groq API key
 5. Deploy. After the service is live, trigger ingestion:
    ```bash
-   curl -X POST https://your-backend.onrender.com/api/ingest
+   curl -X POST https://legalx-backend-2ije.onrender.com
    ```
 
 ### Frontend → Vercel
@@ -355,7 +335,7 @@ LegalX uses **Retrieval-Augmented Generation** to answer user questions with gro
 1. Import the repo on [Vercel](https://vercel.com).
 2. Set the **Root Directory** to `frontend`.
 3. Add the environment variable:
-   - `NEXT_PUBLIC_API_URL` — your Render backend URL (e.g., `https://your-backend.onrender.com`)
+   - `NEXT_PUBLIC_API_URL` — your Render backend URL (e.g., `https://legalx-backend-2ije.onrender.com`)
 4. Deploy.
 
 ### Database → Render PostgreSQL
